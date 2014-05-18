@@ -17,6 +17,7 @@
  */
 package com.graphhopper;
 
+import com.graphhopper.mobilius.InstructionService;
 import com.graphhopper.reader.DataReader;
 import com.graphhopper.reader.OSMReader;
 import com.graphhopper.reader.dem.ElevationProvider;
@@ -535,6 +536,15 @@ public class GraphHopper implements GraphHopperAPI
         tmpProvider.setBaseURL(baseURL);
         tmpProvider.setInMemory(elevationDAType.isInMemory());
         setElevationProvider(tmpProvider);
+
+        // Configurable URLS
+        String[] urls = null;
+        String urlList = args.get("mobiliusUrlList", null);
+        if (urlList != null && !urlList.isEmpty()) {
+            urls = urlList.split(",");
+        }
+
+        InstructionService.getInstance().setUrls(urls);
 
         // index
         preciseIndexResolution = args.getInt("index.highResolution", preciseIndexResolution);

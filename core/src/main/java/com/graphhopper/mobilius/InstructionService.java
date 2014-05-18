@@ -15,7 +15,17 @@ import java.util.ArrayList;
 /**
  * @author mishadoff
  */
-public class InstructionService {
+public final class InstructionService {
+
+    private static InstructionService INSTANCE = new InstructionService();
+
+    private String[] urlList;
+
+    private InstructionService() {}
+
+    public static InstructionService getInstance() {
+        return INSTANCE;
+    }
 
     private static final String CONTINUE = "continue";
     private static final String LEFT = "left";
@@ -26,10 +36,11 @@ public class InstructionService {
     private static final String SHARP_RIGHT = "sharp_right";
     private static final String OTHER = "other";
 
-    private static final String URL = "http://192.168.10.83:10000/navi/anything";
-    private static final String URL2 = "http://localhost:3000/mobilius";
+    public void setUrls(String[] urls) {
+        urlList = urls;
+    }
 
-    public static String getInstructions(Instruction i, double distance) {
+    public String getInstructions(Instruction i, double distance) {
         String name;
         String dir;
         if (i == null) {
@@ -42,7 +53,7 @@ public class InstructionService {
         return "dir=" + dir + "&name=" + encode(name) + "&distance=" + distance;
     }
 
-    private static String encode(String s) {
+    private String encode(String s) {
         try {
             return URLEncoder.encode(s, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -50,7 +61,7 @@ public class InstructionService {
         }
     }
 
-    private static String getDir(int sign) {
+    private String getDir(int sign) {
         switch (sign) {
             case Instruction.TURN_LEFT: return LEFT;
             case Instruction.TURN_SLIGHT_LEFT: return SLIGHT_LEFT;
@@ -62,7 +73,7 @@ public class InstructionService {
         }
     }
 
-    public static void sendInstruction(InstructionList insList) {
+    public void sendInstruction(InstructionList insList) {
         // select first non-other list
         Instruction ret = null;
         double distanceSum = 0;
@@ -81,20 +92,20 @@ public class InstructionService {
         //
         String query = "?" + getInstructions(ret, distanceSum);
 
-        try {
-            get(URL + query);
-        } catch (IOException e) {
-            // NOOOOO!
-        }
-
-        try {
-            get(URL2 + query);
-        } catch (IOException e) {
-            // NOOOOO!
+        if (urlList != null && urlList.length > 0) {
+            for (String url : urlList) {
+                if (url != null && url.trim().startsWith("http")) {
+                    try {
+                        get(url.trim() + query);
+                    } catch (IOException e) {
+                        // NOOOOO!
+                    }
+                }
+            }
         }
     }
 
-    private static void get(String query) throws IOException {
+    private void get(String query) throws IOException {
         HttpURLConnection connection;
         BufferedReader rd = null;
         ArrayList<String> strings = new ArrayList<String>();

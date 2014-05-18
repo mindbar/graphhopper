@@ -115,7 +115,7 @@ public class GraphHopperServlet extends GHBaseServlet
             logger.info(logStr);
 
         /* DOGE */
-        InstructionService.sendInstruction(rsp.getInstructions());
+        InstructionService.getInstance().sendInstruction(rsp.getInstructions());
 
         if (writeGPX)
             writeGPX(req, res, rsp);
