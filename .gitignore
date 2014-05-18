@@ -5,7 +5,7 @@ TODO.txt
 *-gh/
 *.osm
 nbactions-*.xml
-config.properties
+#config.properties
 build.xml
 queries.sh
 maven/
@@ -21,7 +21,6 @@ android/libs/graphhopper-*-android.jar
 .idea/
 *iml
 debug.sh
-*.pbf
 *.dem
 *.log
 core/TODO*.txt
