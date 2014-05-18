@@ -17,6 +17,7 @@
  */
 package com.graphhopper.routing;
 
+import com.graphhopper.mobilius.InstructionService;
 import com.graphhopper.routing.util.FlagEncoder;
 import com.graphhopper.storage.EdgeEntry;
 import com.graphhopper.storage.Graph;
@@ -489,6 +490,10 @@ public class Path
                 prevInstruction.setTime(calcMillis(newDist, flags, false) + prevInstruction.getTime());
             }
         });
+
+        /* DOGE */
+        //InstructionService.sendInstruction(cachedWays.get(0));
+
 
         return cachedWays;
     }

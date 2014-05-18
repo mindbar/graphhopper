@@ -20,6 +20,7 @@ package com.graphhopper.http;
 import com.graphhopper.GHRequest;
 import com.graphhopper.GraphHopper;
 import com.graphhopper.GHResponse;
+import com.graphhopper.mobilius.InstructionService;
 import com.graphhopper.routing.util.FlagEncoder;
 import com.graphhopper.util.*;
 import com.graphhopper.util.Helper;
@@ -112,6 +113,9 @@ public class GraphHopperServlet extends GHBaseServlet
             logger.error(logStr + ", errors:" + rsp.getErrors());
         else
             logger.info(logStr);
+
+        /* DOGE */
+        InstructionService.sendInstruction(rsp.getInstructions());
 
         if (writeGPX)
             writeGPX(req, res, rsp);

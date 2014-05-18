@@ -31,7 +31,7 @@ var routeSegmentPopup = null;
 var elevationControl = null;
 
 var iconFrom = L.icon({
-    iconUrl: './img/marker-icon-green.png',
+    iconUrl: './img/car.png',
     shadowSize: [50, 64],
     shadowAnchor: [4, 62],
     iconAnchor: [12, 40]
@@ -806,7 +806,7 @@ function createTimeString(time) {
 function addInstruction(main, instr, instrIndex, lngLat) {
     var sign = instr.sign;
     if (instrIndex === 0)
-        sign = "marker-icon-green";
+        sign = "car";
     else if (sign === -3)
         sign = "sharp_left";
     else if (sign === -2)
